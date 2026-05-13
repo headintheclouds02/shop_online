@@ -9,14 +9,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
 import com.example.shoponline.R
 import com.example.shoponline.model.product.Product
 
 @Composable
 fun ProductCard(
     //modifier: Modifier,
-    product : Product,
-    ) {
+    product: Product,
+    navController: NavController
+) {
     Box {
         Row() {
             /*AsyncImage(
@@ -30,7 +32,7 @@ fun ProductCard(
                 Text(text = "€${product.price}")
             }
 
-            IconButton(onClick = {}) {
+            IconButton(onClick = { navController.navigate("detail") }) {
                 Icon(
                     painter = painterResource(R.drawable.chevron),
                     contentDescription = "forward arrow"
