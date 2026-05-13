@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShopOnline</string>
+    <string name="home_page_name">Catalogo Prodotti</string>
+    <string name="detail_page_name">Dettaglio Prodotto</string>
+    <string name="cart_page_name">Il mio carrello</string>
+</resources>
