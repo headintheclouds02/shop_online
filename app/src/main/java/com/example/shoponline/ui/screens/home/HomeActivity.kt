@@ -7,17 +7,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.shoponline.R
+import com.example.shoponline.repository.ProductRepository
 import com.example.shoponline.ui.components.CustomTopBar
-import retrofit2.Retrofit
+import com.example.shoponline.ui.components.ProductList
+import com.example.shoponline.view_model.product.ProductViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,9 +42,10 @@ fun HomeActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(
-                text = "Benvenuto nella Home!",
-                style = MaterialTheme.typography.headlineMedium
+            ProductList(
+                viewModel = ProductViewModel(
+                    repository = ProductRepository()
+                )
             )
 
         }
