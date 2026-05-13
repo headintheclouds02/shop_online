@@ -14,8 +14,6 @@ fun ProductList(viewModel: ProductViewModel) {
     LazyColumn() {
         items(products) { product ->
             ProductCard(product)
-
         }
-
     }
 }

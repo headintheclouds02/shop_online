@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import coil3.compose.AsyncImage
 import com.example.shoponline.R
 import com.example.shoponline.model.product.Product
 
@@ -20,10 +19,10 @@ fun ProductCard(
     ) {
     Box {
         Row() {
-            AsyncImage(
+            /*AsyncImage(
                 model = product.images[0],
                 contentDescription = "api call product image"
-            )
+            )*/
 
             Column() {
                 Text(text = product.category.name)
