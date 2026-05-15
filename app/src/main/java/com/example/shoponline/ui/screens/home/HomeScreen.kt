@@ -32,7 +32,8 @@ fun HomeScreen(navController: NavHostController) {
             CustomTopBar(
                 title = stringResource(R.string.home_page_name),
                 cartIcon = Icons.Outlined.ShoppingCart,
-                backArrowIcon = Icons.AutoMirrored.Outlined.ArrowBack,
+                backArrowIcon = null,
+                onBackPress = {}
             )
         }
     ) { paddingValues ->
@@ -41,7 +42,7 @@ fun HomeScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 

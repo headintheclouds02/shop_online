@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,9 +34,11 @@ fun ProductCard(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 16.dp)
+            .padding(bottom = 24.dp)
     ) {
-        Row() {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             GlideImage(
                 model = product.images[0],
                 contentDescription = stringResource(R.string.image_description),
@@ -52,10 +55,12 @@ fun ProductCard(
                 }
             }
 
-            IconButton(onClick = { navController.navigate("detail") }, modifier = Modifier.size(40.dp).) {
+            IconButton(onClick = { navController.navigate("detail") }) {
                 Icon(
                     painter = painterResource(R.drawable.chevron),
-                    contentDescription = "forward arrow"
+                    contentDescription = "forward arrow",
+                    modifier = Modifier
+                        .size(25.dp)
                 )
             }
         }
