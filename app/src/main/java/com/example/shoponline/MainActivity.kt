@@ -1,10 +1,10 @@
 package com.example.shoponline
 
+import MainNavGraph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.shoponline.ui.screens.home.HomeActivity
 import com.example.shoponline.ui.theme.ShopOnlineTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ShopOnlineTheme {
-                HomeActivity()
+                MainNavGraph()
             }
         }
     }

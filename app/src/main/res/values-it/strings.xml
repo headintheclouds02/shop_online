@@ -4,4 +4,5 @@
     <string name="home_page_name">Catalogo Prodotti</string>
     <string name="detail_page_name">Dettaglio Prodotto</string>
     <string name="cart_page_name">Il mio carrello</string>
+    <string name="image_description">Immagine prodotto</string>
 </resources>
