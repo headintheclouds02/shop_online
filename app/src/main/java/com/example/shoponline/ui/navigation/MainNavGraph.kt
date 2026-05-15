@@ -19,7 +19,7 @@ fun MainNavGraph(
         }
 
         composable(route = "detail") {
-            DetailScreen(navController = navController)
+            DetailScreen(product = product, navController = navController)
         }
     }
 }

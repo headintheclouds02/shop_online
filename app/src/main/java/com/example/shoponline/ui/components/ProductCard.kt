@@ -55,7 +55,11 @@ fun ProductCard(
                 }
             }
 
-            IconButton(onClick = { navController.navigate("detail") }) {
+            IconButton(onClick = {
+                navController.navigate(
+                    route = "detail",
+                )
+            }) {
                 Icon(
                     painter = painterResource(R.drawable.chevron),
                     contentDescription = "forward arrow",
