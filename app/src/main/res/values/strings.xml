@@ -3,4 +3,5 @@
     <string name="home_page_name">Product Catalog</string>
     <string name="detail_page_name">Product Detail</string>
     <string name="cart_page_name">My cart</string>
+    <string name="image_description">Product image</string>
 </resources>
