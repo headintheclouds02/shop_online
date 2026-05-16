@@ -57,7 +57,7 @@ fun ProductCard(
 
             IconButton(onClick = {
                 navController.navigate(
-                    route = "detail",
+                    route = "detail/${product.id}",
                 )
             }) {
                 Icon(

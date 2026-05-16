@@ -18,8 +18,10 @@ fun MainNavGraph(
             HomeScreen(navController = navController)
         }
 
-        composable(route = "detail") {
-            DetailScreen(product = product, navController = navController)
+        composable(
+            route = "detail/{productId}"
+        ) {
+            DetailScreen(navController = navController)
         }
     }
 }
