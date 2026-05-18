@@ -9,4 +9,8 @@ class ProductRepository {
     suspend fun getProducts(): List<Product> {
         return api.getProducts()
     }
+
+    suspend fun getProductById(productId: Int): Product {
+        return api.getProductById(productId)
+    }
 }

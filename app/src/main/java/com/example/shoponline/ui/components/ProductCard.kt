@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -19,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.shoponline.R
@@ -29,7 +27,7 @@ import com.example.shoponline.model.product.Product
 @Composable
 fun ProductCard(
     product: Product,
-    navController: NavController
+    onProductClick: (Int) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -48,14 +46,18 @@ fun ProductCard(
             Spacer(Modifier.padding(horizontal = 8.dp))
 
             Box(modifier = Modifier.width(200.dp)) {
-                Column() {
+                Column {
                     Text(text = product.category.name)
                     Text(text = product.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(text = "€ ${product.price}")
                 }
             }
 
-            IconButton(onClick = { navController.navigate("detail") }) {
+            IconButton(
+                onClick = {
+                    onProductClick(product.id)
+                }
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.chevron),
                     contentDescription = "forward arrow",

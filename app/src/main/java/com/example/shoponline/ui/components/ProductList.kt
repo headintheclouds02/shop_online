@@ -5,16 +5,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.navigation.NavController
 import com.example.shoponline.view_model.product.ProductViewModel
 
 @Composable
-fun ProductList(viewModel: ProductViewModel, navController: NavController) {
+fun ProductList(
+    viewModel: ProductViewModel,
+    onProductClick: (Int) -> Unit
+) {
     val products by viewModel.products.collectAsState()
 
-    LazyColumn() {
+    LazyColumn {
         items(products) { product ->
-            ProductCard(product, navController)
+            ProductCard(
+                product = product,
+                onProductClick = onProductClick
+            )
         }
     }
 }
