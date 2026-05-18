@@ -1,9 +1,9 @@
 package com.example.shoponline.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -21,39 +21,53 @@ fun CustomTopBar(
     title: String,
     cartIcon: ImageVector?,
     backArrowIcon: ImageVector?,
-    onBackPress: () -> Unit
+    onBackPress: () -> Unit,
+    onCartPress: () -> Unit
 ) {
-    Row(
+    Box(
         modifier = Modifier
+            .fillMaxWidth()
             .statusBarsPadding()
-            .padding(vertical = 16.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-
+            .padding(vertical = 16.dp)
     ) {
-        if (backArrowIcon != null) {
-            IconButton(
-                onClick = onBackPress,
-            ) {
-                Icon(
-                    backArrowIcon, "back arrow icon",
-                    modifier = Modifier.size(25.dp)
-                )
+        Text(
+            text = title,
+            modifier = Modifier.align(Alignment.Center)
+        )
+
+        Row(
+            modifier = Modifier
+                .matchParentSize()
+                .padding(horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            if (backArrowIcon != null) {
+                IconButton(onClick = onBackPress) {
+                    Icon(
+                        imageVector = backArrowIcon,
+                        contentDescription = "Back",
+                        modifier = Modifier.size(25.dp)
+                    )
+                }
+            } else {
+                Spacer(modifier = Modifier.size(48.dp))
             }
-        } else {
-            Box(Modifier.size(30.dp))
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            if (cartIcon != null) {
+                IconButton(onClick = onCartPress) {
+                    Icon(
+                        imageVector = cartIcon,
+                        contentDescription = "Cart",
+                        modifier = Modifier.size(25.dp)
+                    )
+                }
+            } else {
+                Spacer(modifier = Modifier.size(48.dp))
+            }
         }
 
-        Spacer(Modifier.weight(1f))
-
-        Text(text = title)
-
-        Spacer(Modifier.weight(1f))
-
-        if (cartIcon != null) {
-            IconButton(onClick = {}) {
-                Icon(cartIcon, "cart arrow icon", modifier = Modifier.size(25.dp))
-            }
-        }
     }
 }

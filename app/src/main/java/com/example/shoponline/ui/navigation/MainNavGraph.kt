@@ -3,6 +3,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shoponline.ui.screens.cart.CartScreen
 import com.example.shoponline.ui.screens.detail.DetailScreen
 import com.example.shoponline.ui.screens.home.HomeScreen
 
@@ -18,8 +19,14 @@ fun MainNavGraph(
             HomeScreen(navController = navController)
         }
 
-        composable(route = "detail") {
+        composable(
+            route = "detail/{productId}"
+        ) {
             DetailScreen(navController = navController)
+        }
+
+        composable(route = "cart") {
+            CartScreen(navController = navController)
         }
     }
 }
