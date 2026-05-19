@@ -53,7 +53,7 @@ fun DetailScreen(
 
     val quantityInCart = product?.id.let { id ->
         cartState.quantityOf(id)
-    } ?: 0
+    }
 
     Scaffold(
         topBar = {
@@ -64,13 +64,16 @@ fun DetailScreen(
                 onBackPress = {
                     navController.navigate("home")
                 },
+                onCartPress = {}
             )
         },
         bottomBar = {
             BottomAppBar {
                 if (quantityInCart == 0) {
                     Row(
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
                     ) {
                         Button(
 
@@ -96,7 +99,6 @@ fun DetailScreen(
                             .clip(RoundedCornerShape(32.dp))
                             .background(colorResource(R.color.light_blue))
                             .fillMaxWidth()
-
                     ) {
                         IconButton(onClick = {
                             cartViewModel.removeItem(product?.id ?: 0)
@@ -104,12 +106,14 @@ fun DetailScreen(
                             Icon(
                                 painterResource(R.drawable.minus),
                                 contentDescription = "Minus",
+                                tint = colorResource(R.color.black)
                             )
                         }
 
                         Text(
                             text = quantityInCart.toString(),
-                            fontSize = 24.sp
+                            fontSize = 24.sp,
+                            color = colorResource(R.color.black)
                             )
 
                         IconButton(onClick = {
@@ -118,6 +122,8 @@ fun DetailScreen(
                             Icon(
                                 painterResource(R.drawable.add),
                                 contentDescription = "Add",
+                                tint = colorResource(R.color.black)
+
                             )
                         }
 
