@@ -1,45 +1,131 @@
 package com.example.shoponline.view_model.cart
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.shoponline.model.product.Product
+import com.example.shoponline.repository.CartRepository
 import com.example.shoponline.ui.screens.cart.CartState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class CartViewModel @Inject constructor() : ViewModel() {
+class CartViewModel @Inject constructor(
+    private val cartRepository: CartRepository
+) : ViewModel() {
 
-    private val _state = MutableStateFlow(CartState())
-    val state = _state.asStateFlow()
+    private val _state = MutableStateFlow(CartSftate(isLoading = true))
+    val state: StateFlow<CartState> = _state.asStateFlow()
+
+    init {
+        loadCart()
+    }
+
+    private fun loadCart() {
+        viewModelScope.launch {
+            _state.update { currentState ->
+                currentState.copy(isLoading = true)
+            }
+
+            try {
+                val savedItems = cartRepository.getCartItems()
+
+                _state.update {
+                    CartState(
+                        items = savedItems,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+                _state.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        errorMessage = "Error while loading cart"
+                    )
+                }
+            }
+        }
+    }
 
     fun addItem(productId: Int) {
-        val currentQty = _state.value.quantities[productId] ?: 0
+        val currentItems = _state.value.items
 
-        _state.update {
-            it.copy(
-                quantities = it.quantities + (productId to currentQty + 1)
-            )
-        }
+        val currentQuantity = currentItems[productId] ?: 0
+        val updatedQuantity = currentQuantity + 1
+
+        val updatedItems = currentItems + (productId to updatedQuantity)
+
+        updateCart(updatedItems)
     }
 
     fun removeItem(productId: Int) {
-        val currentQty = _state.value.quantities[productId] ?: 0
-        val newQty = (currentQty - 1).coerceAtLeast(0)
+        val currentItems = _state.value.items
 
-        _state.update {
-            it.copy(
-                quantities =
-                    if (newQty == 0)
-                        it.quantities - productId
-                    else
-                        it.quantities + (productId to newQty)
-            )
+        val currentQuantity = currentItems[productId] ?: return
+
+        val updatedItems =
+            if (currentQuantity <= 1) {
+                currentItems - productId
+            } else {
+                currentItems + (productId to currentQuantity - 1)
+            }
+
+        updateCart(updatedItems)
+    }
+
+    fun removeProduct(productId: Int) {
+        val currentItems = _state.value.items
+
+        val updatedItems = currentItems - productId
+
+        updateCart(updatedItems)
+    }
+
+    fun clearCart() {
+        viewModelScope.launch {
+            _state.update {
+                CartState()
+            }
+
+            try {
+                cartRepository.clearCart()
+            } catch (e: Exception) {
+                _state.update { currentState ->
+                    currentState.copy(
+                        errorMessage = "Error while clearing the cart"
+                    )
+                }
+            }
         }
     }
 
-    fun getQuantity(productId: Int): Int {
-        return _state.value.quantities[productId] ?: 0
+    private fun updateCart(updatedItems: Map<Int, Int>) {
+        viewModelScope.launch {
+            _state.update { currentState ->
+                currentState.copy(
+                    items = updatedItems,
+                    errorMessage = null
+                )
+            }
+
+            try {
+                cartRepository.saveCartItems(updatedItems)
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+                _state.update { currentState ->
+                    currentState.copy(
+                        errorMessage = "Error while saving the cart"
+                    )
+                }
+            }
+        }
     }
 }
