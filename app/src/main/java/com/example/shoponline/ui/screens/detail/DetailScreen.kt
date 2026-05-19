@@ -1,15 +1,12 @@
 package com.example.shoponline.ui.screens.detail
 
-import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -25,15 +22,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,9 +49,11 @@ fun DetailScreen(
 ) {
 
     val product by viewModel.product.collectAsState()
-    val state by cartViewModel.state.collectAsState()
+    val cartState by cartViewModel.state.collectAsState()
 
-    val quantity = state.quantities[product?.id ?: 0] ?: 0
+    val quantityInCart = product?.id.let { id ->
+        cartState.quantityOf(id)
+    }
 
     Scaffold(
         topBar = {
@@ -73,7 +69,7 @@ fun DetailScreen(
         },
         bottomBar = {
             BottomAppBar {
-                if (quantity == 0) {
+                if (quantityInCart == 0) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
@@ -115,14 +111,14 @@ fun DetailScreen(
                         }
 
                         Text(
-                            text = quantity.toString(),
+                            text = quantityInCart.toString(),
                             fontSize = 24.sp,
                             color = colorResource(R.color.black)
                             )
 
                         IconButton(onClick = {
                             cartViewModel.addItem(product?.id ?: 0)
-                        } ) {
+                        }) {
                             Icon(
                                 painterResource(R.drawable.add),
                                 contentDescription = "Add",
