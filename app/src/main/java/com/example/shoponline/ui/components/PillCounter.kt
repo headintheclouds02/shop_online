@@ -18,7 +18,8 @@ import com.example.shoponline.R
 @Composable
 fun PillCounter(
     onMinusClick: () -> Unit,
-    onPlusClick: () -> Unit
+    onPlusClick: () -> Unit,
+    quantity: Int
 
 ) {
     Row(
@@ -37,7 +38,7 @@ fun PillCounter(
                     .size(14.dp)
             )
         }
-        Text(text = "Prova")
+        Text(text = quantity.toString())
         IconButton(onClick = onPlusClick) {
             Icon(
                 painter = painterResource(R.drawable.add),

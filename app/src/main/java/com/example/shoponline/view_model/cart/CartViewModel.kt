@@ -18,7 +18,7 @@ class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(CartSftate(isLoading = true))
+    private val _state = MutableStateFlow(CartState(isLoading = true))
     val state: StateFlow<CartState> = _state.asStateFlow()
 
     init {

@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import com.example.shoponline.R
 import com.example.shoponline.ui.components.CustomTopBar
 import com.example.shoponline.ui.components.ProductList
+import com.example.shoponline.view_model.cart.CartViewModel
 import com.example.shoponline.view_model.home.HomeViewModel
 
 
@@ -41,8 +42,10 @@ import com.example.shoponline.view_model.home.HomeViewModel
 fun HomeScreen(navController: NavHostController) {
 
     val viewModel: HomeViewModel = hiltViewModel()
+    val cartViewModel: CartViewModel = hiltViewModel()
 
     val products by viewModel.products.collectAsState()
+    val cartState by cartViewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -62,10 +65,10 @@ fun HomeScreen(navController: NavHostController) {
                         .padding(horizontal = 16.dp)
                 ) {
                     Text(
-                        "$ prodotti nel carrello",
+                        "${cartState.totalQuantity} prodotti nel carrello",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        fontSize = 10.sp
+                        fontSize = 16.sp
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Button(onClick = {navController.navigate("cart")}) {

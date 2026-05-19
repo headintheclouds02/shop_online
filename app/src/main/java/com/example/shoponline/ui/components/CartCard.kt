@@ -30,7 +30,11 @@ import com.example.shoponline.model.product.Product
 @Composable
 fun CartCard(
     product: Product,
-    navController: NavController
+    quantity: Int,
+    navController: NavController,
+    onBinClick: () -> Unit,
+    onPlusClick: () -> Unit,
+    onMinusClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -56,21 +60,18 @@ fun CartCard(
                     Text(text = "€ ${product.price}")
                     Text(text = "Quantità")
                     PillCounter(
-                        onMinusClick = {},
-                        onPlusClick = {},
+                        onMinusClick = onMinusClick,
+                        onPlusClick = onPlusClick,
+                        quantity = quantity
                     )
 
                 }
             }
 
-            IconButton(onClick = {
-                navController.navigate(
-                    route = "detail/${product.id}",
-                )
-            }) {
+            IconButton(onClick = onBinClick) {
                 Icon(
-                    painter = painterResource(R.drawable.chevron),
-                    contentDescription = "forward arrow",
+                    painter = painterResource(R.drawable.bin),
+                    contentDescription = "bin",
                     modifier = Modifier
                         .size(25.dp)
                 )
